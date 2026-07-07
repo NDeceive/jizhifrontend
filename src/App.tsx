@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { UserProfile, Course, WeakPoint, ErrorRecord, QuizQuestion } from "./types";
 import {
   initialProfile,
@@ -17,6 +17,7 @@ import ResourceView from "./components/ResourceView";
 import PathView from "./components/PathView";
 import AssessmentView from "./components/AssessmentView";
 import ErrorView from "./components/ErrorView";
+import FocusTimer from "./components/FocusTimer";
 
 import {
   Cpu,
@@ -29,7 +30,9 @@ import {
   Compass,
   Award,
   AlertTriangle,
-  Github
+  Github,
+  Menu,
+  X
 } from "lucide-react";
 
 export default function App() {
@@ -45,6 +48,7 @@ export default function App() {
   // Navigations
   const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [prefillPrompt, setPrefillPrompt] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogin = (name: string) => {
     setStudentName(name);
@@ -117,6 +121,14 @@ export default function App() {
     }));
   };
 
+  // Handle study hour increments on completion of focus blocks
+  const handleFocusComplete = (minutes: number) => {
+    setProfile((prev) => ({
+      ...prev,
+      totalHours: Number((prev.totalHours + minutes / 60).toFixed(2))
+    }));
+  };
+
   if (!isLoggedIn) {
     return <Portal onLogin={handleLogin} />;
   }
@@ -133,83 +145,203 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans select-none selection:bg-indigo-100 selection:text-indigo-950">
-      {/* 1. Main Navigation Header */}
-      <header className="px-6 py-4 md:px-12 flex justify-between items-center border-b border-slate-100 bg-white sticky top-0 z-20 shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="bg-indigo-600 p-2 rounded-xl text-white shadow-md shadow-indigo-100">
-            <Cpu className="w-6 h-6" />
+    <div className="min-h-screen glass-bg flex flex-col lg:flex-row font-sans select-none selection:bg-indigo-100 selection:text-indigo-950">
+      {/* Ambient background glowing blobs for Glassmorphism */}
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-200/30 blur-[130px] animate-pulse" style={{ animationDuration: '12s' }} />
+        <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-violet-200/25 blur-[140px] animate-pulse" style={{ animationDuration: '18s' }} />
+        <div className="absolute top-[35%] right-[10%] w-[45%] h-[45%] rounded-full bg-sky-200/25 blur-[120px] animate-pulse" style={{ animationDuration: '14s' }} />
+        <div className="absolute bottom-[-10%] left-[5%] w-[55%] h-[55%] rounded-full bg-emerald-100/20 blur-[110px] animate-pulse" style={{ animationDuration: '20s' }} />
+      </div>
+
+      {/* 1. Desktop Persistent Left Sidebar */}
+      <aside className="hidden lg:flex flex-col w-64 h-screen fixed top-0 left-0 border-r border-slate-200/50 bg-white/50 backdrop-blur-md z-30 p-6 justify-between shadow-sm shrink-0">
+        <div className="space-y-6">
+          {/* Logo / Brand Header */}
+          <div className="flex items-center gap-3 pb-5 border-b border-slate-100">
+            <div className="bg-indigo-600 p-2 rounded-xl text-white shadow-md shadow-indigo-100">
+              <Cpu className="w-5 h-5" />
+            </div>
+            <div>
+              <h1 className="text-sm font-bold tracking-tight text-slate-950 font-sans flex items-center gap-1">
+                计智引擎 <span className="text-[9px] font-bold bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded-full">v2.5</span>
+              </h1>
+              <p className="text-[8px] text-slate-400 font-mono tracking-widest uppercase">Multi-Agent Cognitive Learning</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-lg font-bold tracking-tight text-slate-900 font-sans flex items-center gap-1.5">
-              计智引擎 <span className="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full">Workbench v2.5</span>
-            </h1>
-            <p className="text-[9px] text-slate-400 font-mono tracking-widest uppercase">Multi-Agent Cognitive Learning</p>
+
+          {/* Student Profile Info Card */}
+          <div className="p-3 bg-indigo-50/50 border border-indigo-100/30 rounded-2xl flex items-center gap-3">
+            <div className="p-2 bg-indigo-100/50 text-indigo-600 rounded-xl">
+              <User className="w-4 h-4" />
+            </div>
+            <div className="space-y-0.5">
+              <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">当前登录学生</p>
+              <p className="text-xs font-bold text-slate-800">{studentName}</p>
+            </div>
           </div>
+
+          {/* Sidebar Navigation Tabs */}
+          <nav className="flex flex-col gap-1">
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => handleNavigateToTab(tab.id)}
+                  className={`w-full px-4 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center gap-2.5 cursor-pointer text-left ${
+                    isActive
+                      ? "bg-indigo-600 text-white shadow-md shadow-indigo-100"
+                      : "glass-nav-item text-slate-600 hover:text-slate-900 hover:bg-slate-100/40"
+                  }`}
+                >
+                  {tab.icon}
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* Dynamic Responsive Tab Menu */}
-        <nav className="hidden lg:flex items-center gap-1.5">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => handleNavigateToTab(tab.id)}
-                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 cursor-pointer ${
-                  isActive
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-50/50"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                }`}
-              >
-                {tab.icon}
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* User Stats Badge & Logout */}
-        <div className="flex items-center gap-4 text-xs font-semibold text-slate-700">
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-100/80 rounded-xl border border-slate-200/40">
-            <User className="w-4 h-4 text-indigo-600" />
-            <span>{studentName}</span>
+        {/* Bottom Status & Sign Out */}
+        <div className="space-y-4 pt-4 border-t border-slate-100">
+          <div className="flex flex-col gap-1 px-1">
+            <div className="flex items-center gap-1.5 text-[9px] font-mono text-slate-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Node-S1 Connected</span>
+            </div>
+            <div className="text-[9px] text-slate-400 font-mono">Security Rules: Active</div>
           </div>
 
           <button
             onClick={handleLogout}
-            className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all cursor-pointer flex items-center gap-1 font-bold"
-            title="退出工作台"
+            className="w-full py-2.5 text-xs font-bold text-slate-500 hover:text-rose-600 hover:bg-rose-50/50 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 border border-slate-100/80"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span>退出工作台</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* 2. Mobile Sticky Header */}
+      <header className="lg:hidden px-4 py-3 flex justify-between items-center glass-header sticky top-0 z-20 shadow-sm border-b border-slate-100/60 bg-white/60 backdrop-blur-md">
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="p-1.5 hover:bg-slate-100/60 rounded-xl text-slate-600 cursor-pointer"
+            title="打开菜单"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+          <div className="flex items-center gap-2">
+            <div className="bg-indigo-600 p-1.5 rounded-lg text-white">
+              <Cpu className="w-4 h-4" />
+            </div>
+            <span className="text-sm font-bold text-slate-900">计智引擎</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-bold text-slate-600 bg-slate-50/80 border border-slate-100/40 px-2.5 py-1 rounded-lg">
+            {studentName}
+          </span>
+          <button
+            onClick={handleLogout}
+            className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition-all cursor-pointer"
+            title="退出"
           >
             <LogOut className="w-4 h-4" />
-            <span className="hidden sm:inline">退出</span>
           </button>
         </div>
       </header>
 
-      {/* Mobile Tab Navigation Menu */}
-      <nav className="lg:hidden flex items-center justify-around border-b border-slate-100 bg-white py-2 px-4 shadow-sm sticky top-[68px] z-10 shrink-0 overflow-x-auto gap-2">
-        {tabs.map((tab) => {
-          const isActive = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => handleNavigateToTab(tab.id)}
-              className={`p-2 text-[10px] font-bold rounded-lg transition-all flex flex-col items-center gap-1 cursor-pointer min-w-[50px] ${
-                isActive
-                  ? "bg-indigo-50 text-indigo-700"
-                  : "text-slate-500 hover:bg-slate-50"
-              }`}
-            >
-              {tab.icon}
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
-      </nav>
+      {/* 3. Mobile Slide-out Drawer Navigation */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Dark blur backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-slate-950 z-30 lg:hidden"
+            />
 
-      {/* 2. Main Tab Views Containers */}
-      <main className="flex-grow max-w-7xl w-full mx-auto px-4 py-6 md:px-8">
+            {/* Sidebar Drawer */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 220 }}
+              className="fixed top-0 bottom-0 left-0 w-64 bg-white/95 backdrop-blur-xl border-r border-slate-200/50 shadow-2xl z-45 p-6 flex flex-col justify-between lg:hidden"
+            >
+              <div className="space-y-6">
+                {/* Header inside drawer */}
+                <div className="flex justify-between items-center pb-4 border-b border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <div className="bg-indigo-600 p-1.5 rounded-lg text-white">
+                      <Cpu className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-extrabold text-slate-900">计智引擎 v2.5</span>
+                  </div>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600 cursor-pointer"
+                  >
+                    <X className="w-4.5 h-4.5" />
+                  </button>
+                </div>
+
+                {/* Mobile Profile Display */}
+                <div className="p-3 bg-indigo-50/40 border border-indigo-100/30 rounded-xl flex items-center gap-2">
+                  <User className="w-4 h-4 text-indigo-600" />
+                  <span className="text-xs font-bold text-slate-800">{studentName}</span>
+                </div>
+
+                {/* Mobile Menu Links */}
+                <nav className="flex flex-col gap-1">
+                  {tabs.map((tab) => {
+                    const isActive = activeTab === tab.id;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => {
+                          handleNavigateToTab(tab.id);
+                          setIsMobileMenuOpen(false); // Auto close
+                        }}
+                        className={`w-full px-3.5 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center gap-2.5 cursor-pointer text-left ${
+                          isActive
+                            ? "bg-indigo-600 text-white shadow-md"
+                            : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                        }`}
+                      >
+                        {tab.icon}
+                        <span>{tab.label}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Mobile Drawer Footer */}
+              <div className="space-y-4 pt-4 border-t border-slate-100">
+                <button
+                  onClick={handleLogout}
+                  className="w-full py-2.5 text-xs font-bold text-slate-500 hover:text-rose-600 hover:bg-rose-50/50 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 border border-slate-100"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>退出工作台</span>
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* 4. Right Side Content Container */}
+      <div className="flex-1 flex flex-col lg:pl-64 min-h-screen overflow-y-auto">
+        <main className="flex-grow max-w-7xl w-full mx-auto px-4 py-6 md:px-8">
         {activeTab === "dashboard" && (
           <Dashboard
             profile={profile}
@@ -238,7 +370,11 @@ export default function App() {
         )}
 
         {activeTab === "path" && (
-          <PathView onNavigateToTab={handleNavigateToTab} />
+          <PathView
+            courses={courses}
+            weakPoints={weakPoints}
+            onNavigateToTab={handleNavigateToTab}
+          />
         )}
 
         {activeTab === "analytics" && (
@@ -260,7 +396,7 @@ export default function App() {
       </main>
 
       {/* 3. Global Footer */}
-      <footer className="py-4 border-t border-slate-100 text-center text-[10px] text-slate-400 bg-white flex flex-col sm:flex-row justify-between items-center px-8 gap-2 shrink-0">
+      <footer className="py-4 border-t border-slate-100/40 text-center text-[10px] text-slate-400 bg-white/40 backdrop-blur-md flex flex-col sm:flex-row justify-between items-center px-8 gap-2 shrink-0">
         <span>© {new Date().getFullYear()} 计智引擎 (JiZhi Engine). 408 计算机专业核心课多智能体教学对齐服务.</span>
         <div className="flex items-center gap-3 font-mono">
           <span className="flex items-center gap-1">
@@ -270,6 +406,10 @@ export default function App() {
           <span>Security Rules: Active</span>
         </div>
       </footer>
+      </div>
+
+      {/* Global persistent multi-agent companion focus timer */}
+      <FocusTimer onFocusComplete={handleFocusComplete} />
     </div>
   );
 }

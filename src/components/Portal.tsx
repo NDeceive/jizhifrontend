@@ -48,9 +48,17 @@ export default function Portal({ onLogin }: PortalProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-950 font-sans">
+    <div className="min-h-screen glass-bg flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-950 font-sans relative">
+      {/* Ambient background glowing blobs for Glassmorphism */}
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-200/30 blur-[130px] animate-pulse" style={{ animationDuration: '12s' }} />
+        <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-violet-200/25 blur-[140px] animate-pulse" style={{ animationDuration: '18s' }} />
+        <div className="absolute top-[35%] right-[10%] w-[45%] h-[45%] rounded-full bg-sky-200/25 blur-[120px] animate-pulse" style={{ animationDuration: '14s' }} />
+        <div className="absolute bottom-[-10%] left-[5%] w-[55%] h-[55%] rounded-full bg-emerald-100/20 blur-[110px] animate-pulse" style={{ animationDuration: '20s' }} />
+      </div>
+
       {/* Top Header */}
-      <header className="px-6 py-4 md:px-12 flex justify-between items-center border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+      <header className="px-6 py-4 md:px-12 flex justify-between items-center glass-header sticky top-0 z-10">
         <div className="flex items-center gap-3">
           <div className="bg-indigo-600 p-2 rounded-xl text-white shadow-md shadow-indigo-100">
             <Cpu className="w-6 h-6" />
@@ -62,7 +70,7 @@ export default function Portal({ onLogin }: PortalProps) {
             <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase">Multi-Agent CS Learning System</p>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-xs font-mono text-slate-500 bg-slate-100/80 px-3 py-1.5 rounded-full">
+        <div className="flex items-center gap-2 text-xs font-mono text-slate-500 glass-card-dense px-3 py-1.5 rounded-full">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           系统内核：V2.5-CS
         </div>
@@ -78,7 +86,7 @@ export default function Portal({ onLogin }: PortalProps) {
             transition={{ duration: 0.5 }}
             className="space-y-4"
           >
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-indigo-700 bg-indigo-50 rounded-full">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-indigo-700 glass-card-dense rounded-full">
               <Sparkles className="w-3.5 h-3.5" /> 智能驱动 · 个性化生成 · 学术级深度
             </span>
             <h2 className="text-3.5xl md:text-4.5xl font-extrabold tracking-tight text-slate-900 leading-tight">
@@ -103,9 +111,9 @@ export default function Portal({ onLogin }: PortalProps) {
               <motion.div
                 key={i}
                 whileHover={{ y: -2 }}
-                className={`p-5 rounded-2xl border border-slate-100 bg-white shadow-sm transition-all duration-200 ${cap.bg} cursor-pointer group`}
+                className={`p-5 rounded-2xl glass-card glass-card-hover cursor-pointer group`}
               >
-                <div className="p-2.5 bg-white rounded-xl shadow-sm w-fit mb-4 group-hover:scale-105 transition-transform">
+                <div className="p-2.5 bg-white/80 rounded-xl shadow-sm w-fit mb-4 group-hover:scale-105 transition-transform border border-white/40">
                   {cap.icon}
                 </div>
                 <h3 className="text-sm font-semibold text-slate-900 mb-1.5">{cap.title}</h3>
@@ -121,7 +129,7 @@ export default function Portal({ onLogin }: PortalProps) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1, duration: 0.5 }}
-            className="w-full max-w-md bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-100/50 p-8 space-y-8"
+            className="w-full max-w-md glass-card-dense rounded-3xl p-8 space-y-8"
           >
             <div className="space-y-2">
               <h3 className="text-xl font-bold text-slate-900">欢迎回来</h3>
@@ -137,7 +145,7 @@ export default function Portal({ onLogin }: PortalProps) {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all font-medium text-slate-800"
+                  className="w-full px-4 py-3 rounded-xl glass-input text-sm focus:outline-none transition-all font-medium text-slate-800"
                   placeholder="例如：202610214"
                 />
               </div>
@@ -151,12 +159,12 @@ export default function Portal({ onLogin }: PortalProps) {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all font-mono"
+                  className="w-full px-4 py-3 rounded-xl glass-input text-sm focus:outline-none transition-all font-mono text-slate-800"
                 />
               </div>
 
               {error && (
-                <p className="text-xs text-rose-600 bg-rose-50 px-3 py-2 rounded-lg font-medium">{error}</p>
+                <p className="text-xs text-rose-600 bg-rose-50/80 px-3 py-2 rounded-lg font-medium border border-rose-100/50">{error}</p>
               )}
 
               <div className="flex items-center justify-between">
@@ -176,7 +184,7 @@ export default function Portal({ onLogin }: PortalProps) {
               </button>
             </form>
 
-            <div className="border-t border-slate-100 pt-6 flex items-center justify-center gap-2 text-xs text-slate-400">
+            <div className="border-t border-slate-100/40 pt-6 flex items-center justify-center gap-2 text-xs text-slate-400">
               <ShieldCheck className="w-4 h-4 text-emerald-500" />
               <span>数据全程进行加密并接受本地 ProfileAgent 隐私保护</span>
             </div>
@@ -185,7 +193,7 @@ export default function Portal({ onLogin }: PortalProps) {
       </main>
 
       {/* Footer */}
-      <footer className="py-6 border-t border-slate-100 text-center text-xs text-slate-400 bg-white">
+      <footer className="py-6 border-t border-slate-100/40 text-center text-xs text-slate-400 bg-white/40 backdrop-blur-md">
         © {new Date().getFullYear()} 计智引擎 (JiZhi Engine). 计算机核心专业课 AI 智慧伴学与多智能体赋能服务平台.
       </footer>
     </div>

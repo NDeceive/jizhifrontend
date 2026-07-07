@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
-import { PathStage } from "../types";
+import { PathStage, Course, WeakPoint } from "../types";
 import { initialPathStages } from "../mockData";
+import KnowledgeGraph from "./KnowledgeGraph";
 import {
   Compass,
   CheckCircle,
@@ -18,10 +19,12 @@ import {
 } from "lucide-react";
 
 interface PathViewProps {
+  courses: Course[];
+  weakPoints: WeakPoint[];
   onNavigateToTab: (tab: string, prefillData?: any) => void;
 }
 
-export default function PathView({ onNavigateToTab }: PathViewProps) {
+export default function PathView({ courses, weakPoints, onNavigateToTab }: PathViewProps) {
   const [stages, setStages] = useState<PathStage[]>(initialPathStages);
   const [expandedStageId, setExpandedStageId] = useState<string | null>("stage-2");
 
@@ -76,6 +79,9 @@ export default function PathView({ onNavigateToTab }: PathViewProps) {
           </div>
         </div>
       </section>
+
+      {/* Interactive Discipline Knowledge Graph */}
+      <KnowledgeGraph courses={courses} weakPoints={weakPoints} onNavigateToTab={onNavigateToTab} />
 
       {/* Timeline stages */}
       <section className="space-y-4">
