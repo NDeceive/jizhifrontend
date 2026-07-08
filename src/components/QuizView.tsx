@@ -214,7 +214,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
         {/* Test Parameters Settings Card */}
         <section className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 space-y-4">
           <h3 className="text-xs font-bold text-slate-950 uppercase tracking-wider flex items-center gap-1.5">
-            <RefreshCw className="w-4 h-4 text-indigo-600" /> 自适应测验配置
+            <RefreshCw className="w-4 h-4 text-blue-600" /> 自适应测验配置
           </h3>
           <p className="text-xs text-slate-500">根据当前专业课复习大纲，由 QuizAgent 动态合成专项试卷。</p>
 
@@ -225,7 +225,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
               <select
                 value={settings.domain}
                 onChange={(e) => setSettings((prev) => ({ ...prev, domain: e.target.value }))}
-                className="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors"
+                className="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 transition-colors"
               >
                 <option value="数据结构与算法">数据结构与算法 (树/图/哈希)</option>
                 <option value="操作系统">操作系统 (并发/死锁/虚拟内存)</option>
@@ -245,7 +245,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
                     onClick={() => setSettings((prev) => ({ ...prev, numQuestions: num }))}
                     className={`flex-1 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
                       settings.numQuestions === num
-                        ? "border-indigo-600 bg-indigo-50 text-indigo-700"
+                        ? "border-blue-600 bg-blue-50 text-blue-700"
                         : "border-slate-200 hover:border-slate-300 text-slate-600"
                     }`}
                   >
@@ -265,7 +265,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
                     onClick={() => setSettings((prev) => ({ ...prev, difficulty: diff as any }))}
                     className={`flex-1 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer uppercase ${
                       settings.difficulty === diff
-                        ? "border-indigo-600 bg-indigo-50 text-indigo-700"
+                        ? "border-blue-600 bg-blue-50 text-blue-700"
                         : "border-slate-200 hover:border-slate-300 text-slate-600"
                     }`}
                   >
@@ -278,7 +278,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
             <button
               onClick={handleGenerateQuiz}
               disabled={isGenerating}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 text-white font-semibold text-xs py-2.5 rounded-xl shadow-md shadow-indigo-100 flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-semibold text-xs py-2.5 rounded-xl shadow-md shadow-blue-100 flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
               {isGenerating ? "正在智能组卷中..." : "🎯 组卷并开始测验"}
@@ -290,7 +290,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
         <section className="bg-slate-900 text-slate-300 rounded-2xl border border-slate-800 p-5 space-y-3.5 shadow-sm font-mono text-xs">
           <div className="flex justify-between items-center border-b border-slate-800 pb-2.5">
             <span className="text-white font-bold flex items-center gap-1">
-              <Brain className="w-4 h-4 text-indigo-400" /> QuizAgent Status
+              <Brain className="w-4 h-4 text-blue-400" /> QuizAgent Status
             </span>
             <span className="bg-emerald-950 text-emerald-400 border border-emerald-900 text-[9px] font-bold px-2 py-0.5 rounded uppercase">
               Online
@@ -323,7 +323,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
       <div className="lg:col-span-8">
         {loading ? (
           <div className="bg-white rounded-2xl border border-slate-100 p-12 text-center shadow-sm flex flex-col items-center justify-center min-h-[450px] space-y-4">
-            <RefreshCw className="w-8 h-8 text-indigo-600 animate-spin" />
+            <RefreshCw className="w-8 h-8 text-blue-600 animate-spin" />
             <div>
               <h4 className="text-sm font-bold text-slate-800">QuizAgent 正在拟定并校验专业考题...</h4>
               <p className="text-xs text-slate-400 mt-1">正在基于大纲深度检索，编写代码上下文并核实答案唯一性。</p>
@@ -334,7 +334,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
           <div className="bg-white rounded-2xl border border-slate-100 p-6 md:p-8 shadow-sm space-y-6 fade-in">
             {/* Header / Score Dial */}
             <div className="text-center py-6 border-b border-slate-100 space-y-3">
-              <div className="inline-flex p-3 bg-indigo-50 text-indigo-700 rounded-full">
+              <div className="inline-flex p-3 bg-blue-50 text-blue-700 rounded-full">
                 <ClipboardCheck className="w-10 h-10" />
               </div>
               <h3 className="text-xl font-bold text-slate-900">专项测验已结束</h3>
@@ -347,7 +347,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
                 </div>
                 <div className="h-8 w-px bg-slate-200"></div>
                 <div className="space-y-0.5">
-                  <div className="text-2.5xl font-extrabold text-indigo-600">{scorePercent}%</div>
+                  <div className="text-2.5xl font-extrabold text-blue-600">{scorePercent}%</div>
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">能力评分</div>
                 </div>
               </div>
@@ -355,8 +355,8 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
 
             {/* Diagnosis / Insights */}
             <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl space-y-2">
-              <h4 className="text-xs font-bold text-indigo-950 flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-indigo-600" /> ProfileAgent 协同诊断结果
+              <h4 className="text-xs font-bold text-blue-950 flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-blue-600" /> ProfileAgent 协同诊断结果
               </h4>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {scorePercent === 100
@@ -426,8 +426,8 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
                     </div>
 
                     {/* Academic Explanation */}
-                    <div className="bg-indigo-50/30 p-3 rounded-lg border border-indigo-50/60 text-xs text-slate-600 space-y-1.5">
-                      <div className="font-bold text-indigo-950 flex items-center gap-1">
+                    <div className="bg-blue-50/30 p-3 rounded-lg border border-blue-50/60 text-xs text-slate-600 space-y-1.5">
+                      <div className="font-bold text-blue-950 flex items-center gap-1">
                         <BookOpen className="w-3.5 h-3.5" /> 学术深度解析 (Detailed Explanation)
                       </div>
                       <p className="leading-relaxed text-slate-600">{q.explanation}</p>
@@ -446,7 +446,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
               </button>
               <button
                 onClick={() => onNavigateToTab("dashboard")}
-                className="text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-5 py-2.5 rounded-xl shadow-sm transition-colors cursor-pointer"
+                className="text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-xl shadow-sm transition-colors cursor-pointer"
               >
                 返回工作台 dashboard
               </button>
@@ -462,7 +462,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
                 <div className="flex justify-between items-center border-b border-slate-100 pb-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full font-sans uppercase">
+                      <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full font-sans uppercase">
                         {questions[currentIndex]?.domain}
                       </span>
                       {marked.includes(currentIndex) && (
@@ -504,13 +504,13 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
                         onClick={() => handleSelectOption(oIdx)}
                         className={`w-full text-left p-4 rounded-xl border transition-all text-xs font-medium flex items-center gap-3.5 cursor-pointer ${
                           isSelected
-                            ? "border-indigo-600 bg-indigo-50/30 text-indigo-900 ring-2 ring-indigo-50"
+                            ? "border-blue-600 bg-blue-50/30 text-blue-900 ring-2 ring-blue-50"
                             : "border-slate-150 hover:border-slate-350 bg-white text-slate-700"
                         }`}
                       >
                         <div className={`w-5 h-5 rounded-full border flex items-center justify-center font-mono font-bold text-[11px] transition-all ${
                           isSelected
-                            ? "border-indigo-600 bg-indigo-600 text-white"
+                            ? "border-blue-600 bg-blue-600 text-white"
                             : "border-slate-300 text-slate-500 bg-slate-50"
                         }`}>
                           {String.fromCharCode(65 + oIdx)}
@@ -548,7 +548,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
                     {/* Ask hint from AI */}
                     <button
                       onClick={handleRequestHint}
-                      className="text-xs font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-4 py-2.5 rounded-xl transition-colors cursor-pointer flex items-center gap-1"
+                      className="text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-4 py-2.5 rounded-xl transition-colors cursor-pointer flex items-center gap-1"
                     >
                       <HelpCircle className="w-3.5 h-3.5" /> AI 提示
                     </button>
@@ -556,7 +556,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
                     {currentIndex < questions.length - 1 ? (
                       <button
                         onClick={handleNext}
-                        className="text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-5 py-2.5 rounded-xl transition-colors shadow-sm cursor-pointer"
+                        className="text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-xl transition-colors shadow-sm cursor-pointer"
                       >
                         下一题
                       </button>
@@ -574,8 +574,8 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
 
               {/* HINT POPOVER INLINE */}
               {showHint && (
-                <div className="bg-indigo-50 border border-indigo-100 p-4 rounded-xl text-xs text-indigo-900 leading-relaxed flex items-start gap-2.5 fade-in">
-                  <Sparkles className="w-4 h-4 text-indigo-600 mt-0.5 shrink-0" />
+                <div className="bg-blue-50 border border-blue-100 p-4 rounded-xl text-xs text-blue-900 leading-relaxed flex items-start gap-2.5 fade-in">
+                  <Sparkles className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
                   <div className="space-y-1">
                     <span className="font-bold block">HintAgent 认知线索启发：</span>
                     {loadingHint ? (
@@ -607,11 +607,11 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
                       onClick={() => setCurrentIndex(idx)}
                       className={`h-9 text-xs font-bold font-mono rounded-lg border transition-all cursor-pointer flex items-center justify-center ${
                         isCurrent
-                          ? "border-indigo-600 bg-indigo-50 text-indigo-800 ring-2 ring-indigo-100"
+                          ? "border-blue-600 bg-blue-50 text-blue-800 ring-2 ring-blue-100"
                           : isMarked
                           ? "border-amber-400 bg-amber-50 text-amber-700"
                           : isAnswered
-                          ? "border-indigo-600 bg-indigo-600 text-white"
+                          ? "border-blue-600 bg-blue-600 text-white"
                           : "border-slate-200 hover:border-slate-300 text-slate-500 bg-slate-50"
                       }`}
                     >
@@ -623,7 +623,7 @@ export default function QuizView({ onAddErrorRecord, onNavigateToTab }: QuizView
 
               <div className="border-t border-slate-100 pt-3 space-y-2 text-[10px] text-slate-500 font-semibold">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 bg-indigo-600 rounded"></div>
+                  <div className="w-3 h-3 bg-blue-600 rounded"></div>
                   <span>已作答 ({answeredCount} 题)</span>
                 </div>
                 <div className="flex items-center gap-1.5">

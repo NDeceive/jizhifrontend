@@ -20,7 +20,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   const parts = content.split(/(```[\s\S]*?```)/g);
 
   return (
-    <div className="space-y-4 text-xs md:text-sm leading-relaxed text-slate-700 selection:bg-indigo-100 selection:text-indigo-950 font-sans">
+    <div className="space-y-4 text-xs md:text-sm leading-relaxed text-slate-700 selection:bg-blue-100 selection:text-blue-950 font-sans">
       {parts.map((part, index) => {
         // Check if this part is a code block
         if (part.startsWith("```")) {
@@ -70,7 +70,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
               if (trimmed.startsWith("###")) {
                 return (
                   <h4 key={lIndex} className="text-sm font-bold text-slate-900 pt-2 flex items-center gap-1">
-                    <span className="w-1.5 h-3.5 bg-indigo-500 rounded-full inline-block"></span>
+                    <span className="w-1.5 h-3.5 bg-blue-500 rounded-full inline-block"></span>
                     {trimmed.replace(/^###\s*/, "")}
                   </h4>
                 );
@@ -79,7 +79,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
               if (trimmed.startsWith("##")) {
                 return (
                   <h3 key={lIndex} className="text-base font-extrabold text-slate-950 pt-4 pb-1 border-b border-slate-100 flex items-center gap-2">
-                    <span className="w-2.5 h-4.5 bg-indigo-600 rounded inline-block"></span>
+                    <span className="w-2.5 h-4.5 bg-blue-600 rounded inline-block"></span>
                     {trimmed.replace(/^##\s*/, "")}
                   </h3>
                 );
@@ -96,7 +96,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
               // Quotes: > Quote
               if (trimmed.startsWith(">")) {
                 return (
-                  <blockquote key={lIndex} className="pl-4 py-2 border-l-4 border-indigo-500 bg-indigo-50/30 text-xs text-indigo-950 rounded-r-lg my-2 italic font-semibold leading-relaxed">
+                  <blockquote key={lIndex} className="pl-4 py-2 border-l-4 border-blue-500 bg-blue-50/30 text-xs text-blue-950 rounded-r-lg my-2 italic font-semibold leading-relaxed">
                     {trimmed.replace(/^>\s*/, "")}
                   </blockquote>
                 );
@@ -125,7 +125,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                 const num = trimmed.match(/^(\d+)\./)?.[1] || "1";
                 return (
                   <div key={lIndex} className="flex gap-2 pl-2 my-2 text-slate-600 leading-relaxed">
-                    <span className="font-mono font-bold text-indigo-600">{num}.</span>
+                    <span className="font-mono font-bold text-blue-600">{num}.</span>
                     <span>{parseInlineFormatting(text)}</span>
                   </div>
                 );
@@ -158,17 +158,17 @@ function parseInlineFormatting(text: string): React.ReactNode[] {
       return <strong key={i} className="font-extrabold text-slate-900">{part.slice(2, -2)}</strong>;
     }
     if (part.startsWith("`") && part.endsWith("`")) {
-      return <code key={i} className="px-1.5 py-0.5 bg-slate-100 text-indigo-600 font-mono text-[11px] rounded border border-slate-150">{part.slice(1, -1)}</code>;
+      return <code key={i} className="px-1.5 py-0.5 bg-slate-100 text-blue-600 font-mono text-[11px] rounded border border-slate-150">{part.slice(1, -1)}</code>;
     }
     if (part.startsWith("$$") && part.endsWith("$$")) {
       return (
-        <span key={i} className="block text-center py-2 bg-indigo-50/20 text-indigo-950 font-mono text-xs rounded-lg border border-indigo-100/30 my-2">
+        <span key={i} className="block text-center py-2 bg-blue-50/20 text-blue-950 font-mono text-xs rounded-lg border border-blue-100/30 my-2">
           {part.slice(2, -2)}
         </span>
       );
     }
     if (part.startsWith("$") && part.endsWith("$")) {
-      return <span key={i} className="font-mono font-bold text-indigo-950 px-0.5">{part.slice(1, -1)}</span>;
+      return <span key={i} className="font-mono font-bold text-blue-950 px-0.5">{part.slice(1, -1)}</span>;
     }
     return <span key={i}>{part}</span>;
   });

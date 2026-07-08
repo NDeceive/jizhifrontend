@@ -9,13 +9,14 @@ export const initialProfile: UserProfile = {
   streak: 15,
   testsTaken: 12,
   pendingTasks: 5,
-  weakPointsCount: 8
+  weakPointsCount: 8,
+  extraPoints: 350
 };
 
 export const initialCourses: Course[] = [
   { id: "c-lang", name: "C语言程序设计", code: "CS101", proficiency: 92, totalHours: 32, completionRate: 100, color: "blue" },
-  { id: "data-struct", name: "数据结构与算法", code: "CS201", proficiency: 84, totalHours: 45, completionRate: 95, color: "indigo" },
-  { id: "comp-org", name: "计算机组成原理", code: "CS202", proficiency: 81, totalHours: 20, completionRate: 85, color: "purple" },
+  { id: "data-struct", name: "数据结构与算法", code: "CS201", proficiency: 84, totalHours: 45, completionRate: 95, color: "blue" },
+  { id: "comp-org", name: "计算机组成原理", code: "CS202", proficiency: 81, totalHours: 20, completionRate: 85, color: "sky" },
   { id: "os", name: "操作系统", code: "CS301", proficiency: 89, totalHours: 18, completionRate: 90, color: "emerald" },
   { id: "networks", name: "计算机网络", code: "CS302", proficiency: 78, totalHours: 9, completionRate: 70, color: "rose" }
 ];

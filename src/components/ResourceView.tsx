@@ -133,7 +133,7 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
       <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-100 p-5 shadow-sm flex flex-col justify-between h-full overflow-y-auto space-y-5">
         <div className="space-y-4">
           <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-3">
-            <Sliders className="w-4 h-4 text-indigo-600" /> 学习资源生成设置
+            <Sliders className="w-4 h-4 text-blue-600" /> 学习资源生成设置
           </h3>
 
           <div className="space-y-4">
@@ -143,7 +143,7 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
               <select
                 value={input.subject}
                 onChange={(e) => setInput((p) => ({ ...p, subject: e.target.value }))}
-                className="w-full text-xs px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-all font-semibold"
+                className="w-full text-xs px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 transition-all font-semibold"
               >
                 <option value="数据结构与算法">数据结构与算法</option>
                 <option value="操作系统">操作系统</option>
@@ -161,7 +161,7 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
                 value={input.topic}
                 onChange={(e) => setInput((p) => ({ ...p, topic: e.target.value }))}
                 placeholder="请输入详细的知识考查点主题..."
-                className="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-all font-semibold text-slate-800"
+                className="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 transition-all font-semibold text-slate-800"
               />
             </div>
 
@@ -180,7 +180,7 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
                     onClick={() => setInput((p) => ({ ...p, resourceType: t.value as any }))}
                     className={`p-2 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer h-16 ${
                       input.resourceType === t.value
-                        ? "border-indigo-600 bg-indigo-50/50 ring-2 ring-indigo-50"
+                        ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-50"
                         : "border-slate-150 bg-white hover:border-slate-250 hover:shadow-sm"
                     }`}
                   >
@@ -201,7 +201,7 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
                     onClick={() => setInput((p) => ({ ...p, difficulty: lvl as any }))}
                     className={`flex-1 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer uppercase ${
                       input.difficulty === lvl
-                        ? "border-indigo-600 bg-indigo-50 text-indigo-700 font-bold"
+                        ? "border-blue-600 bg-blue-50 text-blue-700 font-bold"
                         : "border-slate-200 hover:border-slate-300 text-slate-600"
                     }`}
                   >
@@ -214,7 +214,7 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
             <button
               onClick={handleGenerate}
               disabled={isGenerating}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 text-white font-bold text-xs py-2.5 rounded-xl shadow-md shadow-indigo-100 flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs py-2.5 rounded-xl shadow-md shadow-blue-100 flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
               {isGenerating ? "多智能体协同编写中..." : "🌟 开始智能合成资源"}
@@ -226,13 +226,13 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
         {(isGenerating || logs.length > 0) && (
           <div className="bg-slate-950 border border-slate-900 rounded-xl p-3.5 font-mono text-[9px] text-slate-400 space-y-2 h-44 flex flex-col justify-between overflow-hidden shadow-inner relative">
             {/* Terminal scanner ray */}
-            <div className="absolute top-0 left-0 w-full h-0.5 bg-indigo-500 opacity-20 animate-pulse"></div>
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-blue-500 opacity-20 animate-pulse"></div>
             
             <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 text-slate-500">
               <span className="flex items-center gap-1">
-                <Terminal className="w-3.5 h-3.5 text-indigo-500" /> AGENTS LIVE FLOW
+                <Terminal className="w-3.5 h-3.5 text-blue-500" /> AGENTS LIVE FLOW
               </span>
-              <span className="animate-pulse text-indigo-400 text-[8px] font-bold">● PROCESSING</span>
+              <span className="animate-pulse text-blue-400 text-[8px] font-bold">● PROCESSING</span>
             </div>
 
             <div ref={logsRef} className="flex-grow overflow-y-auto space-y-1.5 pr-2 select-text scroll-smooth">
@@ -262,7 +262,7 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
         {isGenerating ? (
           /* LOADING STATE */
           <div className="flex-grow flex flex-col items-center justify-center text-center p-12 space-y-4">
-            <RefreshCw className="w-8 h-8 text-indigo-600 animate-spin" />
+            <RefreshCw className="w-8 h-8 text-blue-600 animate-spin" />
             <div className="space-y-1.5">
               <h4 className="text-xs font-bold text-slate-800">ResourceAgent 正在精心书写讲义...</h4>
               <p className="text-[11px] text-slate-400 max-w-sm leading-relaxed">
@@ -277,7 +277,7 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
             <div className="px-5 py-3 bg-slate-50 border-b border-slate-100 flex justify-between items-center shrink-0">
               <div className="space-y-0.5">
                 <h4 className="text-xs font-bold text-slate-900">
-                  {resource.topic} <span className="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded ml-1.5">{resource.resourceType === 'LectureNotes' ? '学术讲义' : '专项作业'}</span>
+                  {resource.topic} <span className="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded ml-1.5">{resource.resourceType === 'LectureNotes' ? '学术讲义' : '专项作业'}</span>
                 </h4>
                 <p className="text-[10px] text-slate-400">大纲拟定：{resource.difficulty === 'Advanced' ? '高等考研难度' : '中等复习大纲'} | 生成日期：{resource.createdDate}</p>
               </div>
@@ -297,7 +297,7 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
                     </>
                   ) : (
                     <>
-                      <BookmarkPlus className="w-3.5 h-3.5 text-indigo-600" /> 存入我的自习室
+                      <BookmarkPlus className="w-3.5 h-3.5 text-blue-600" /> 存入我的自习室
                     </>
                   )}
                 </button>
@@ -312,19 +312,19 @@ export default function ResourceView({ onNavigateToTab }: ResourceViewProps) {
             {/* Bottom action bar */}
             <div className="p-4 border-t border-slate-100 bg-slate-50 flex justify-between items-center shrink-0 text-xs">
               <span className="text-slate-400 font-semibold font-mono flex items-center gap-1">
-                <Cpu className="w-3.5 h-3.5 text-indigo-500" /> Model: Gemini-3.1-Pro (Curriculum Engine)
+                <Cpu className="w-3.5 h-3.5 text-blue-500" /> Model: Gemini-3.1-Pro (Curriculum Engine)
               </span>
 
               <div className="flex gap-2.5">
                 <button
                   onClick={() => onNavigateToTab("mentor", `我想针对今天生成的《${resource.topic}》讲义内容进行深度的提问答疑！`)}
-                  className="text-xs font-semibold text-indigo-600 bg-white hover:bg-indigo-50 border border-slate-200 px-4 py-2 rounded-xl transition-colors cursor-pointer"
+                  className="text-xs font-semibold text-blue-600 bg-white hover:bg-blue-50 border border-slate-200 px-4 py-2 rounded-xl transition-colors cursor-pointer"
                 >
                   向 AI 导师对齐提问
                 </button>
                 <button
                   onClick={() => onNavigateToTab("quiz", resource.topic)}
-                  className="text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-xl shadow-sm transition-colors cursor-pointer flex items-center gap-0.5"
+                  className="text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl shadow-sm transition-colors cursor-pointer flex items-center gap-0.5"
                 >
                   生成针对性测试题 <ArrowRight className="w-3.5 h-3.5" />
                 </button>

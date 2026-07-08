@@ -62,7 +62,7 @@ export default function AssessmentView({ profile, courses, weakPoints, onNavigat
         <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between items-center text-center">
           <div className="space-y-1 w-full text-left">
             <h3 className="text-xs font-bold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
-              <Award className="w-4 h-4 text-indigo-600" /> 专业掌握度总报告
+              <Award className="w-4 h-4 text-blue-600" /> 专业掌握度总报告
             </h3>
             <p className="text-xs text-slate-400 font-medium">ProfileAgent 动态生成的全能能力画像系数</p>
           </div>
@@ -71,7 +71,7 @@ export default function AssessmentView({ profile, courses, weakPoints, onNavigat
             {/* Simple elegant CSS circular progress ring */}
             <div className="w-36 h-36 rounded-full border-8 border-slate-100 flex flex-col items-center justify-center relative shadow-inner">
               {/* Outer stroke indicator */}
-              <div className="absolute inset-0 rounded-full border-8 border-indigo-600/25 animate-pulse"></div>
+              <div className="absolute inset-0 rounded-full border-8 border-blue-600/25 animate-pulse"></div>
               <span className="text-3.5xl font-black text-slate-950 tracking-tight font-sans">{profile.proficiency}</span>
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Overall Score</span>
             </div>
@@ -97,7 +97,7 @@ export default function AssessmentView({ profile, courses, weakPoints, onNavigat
         <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between">
           <div className="space-y-1">
             <h3 className="text-xs font-bold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
-              <TrendingUp className="w-4 h-4 text-indigo-600" /> 专业知识雷达图 (Mastery Radar Map)
+              <TrendingUp className="w-4 h-4 text-blue-600" /> 专业知识雷达图 (Mastery Radar Map)
             </h3>
             <p className="text-xs text-slate-400 font-medium">覆盖计算机统考五大核心科目，多级掌握度权重呈现。</p>
           </div>
@@ -120,7 +120,7 @@ export default function AssessmentView({ profile, courses, weakPoints, onNavigat
       <section className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-4">
         <div className="space-y-1">
           <h3 className="text-xs font-bold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
-            <Calendar className="w-4 h-4 text-indigo-600" /> 掌握曲线动态追踪 (Learning Trend)
+            <Calendar className="w-4 h-4 text-blue-600" /> 掌握曲线动态追踪 (Learning Trend)
           </h3>
           <p className="text-xs text-slate-400 font-medium">过去 6 个月内由于自适应练习和资源温盘带来的掌握度稳步攀升趋势曲线。</p>
         </div>
@@ -181,7 +181,7 @@ export default function AssessmentView({ profile, courses, weakPoints, onNavigat
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-2 max-w-[120px]">
                       <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                        <div className="bg-indigo-600 h-full rounded-full" style={{ width: `${wp.remediationProgress}%` }}></div>
+                        <div className="bg-blue-600 h-full rounded-full" style={{ width: `${wp.remediationProgress}%` }}></div>
                       </div>
                       <span className="font-mono text-[10px] text-slate-500">{wp.remediationProgress}%</span>
                     </div>
@@ -190,14 +190,14 @@ export default function AssessmentView({ profile, courses, weakPoints, onNavigat
                     <div className="flex gap-2 justify-end">
                       <button
                         onClick={() => onNavigateToTab("mentor", `我想深度对齐提问知识点【${wp.name}】的理论及具体实现代码。`)}
-                        className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors cursor-pointer"
+                        className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer"
                         title="AI 导师问答"
                       >
                         <MessageSquare className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => onNavigateToTab("quiz", wp.name)}
-                        className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors cursor-pointer"
+                        className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer"
                         title="自适应专项练习"
                       >
                         <Brain className="w-4 h-4" />

@@ -22,10 +22,10 @@ export default function Portal({ onLogin }: PortalProps) {
 
   const capabilities = [
     {
-      icon: <Database className="w-6 h-6 text-indigo-600" />,
+      icon: <Database className="w-6 h-6 text-blue-600" />,
       title: "学习画像诊断",
       desc: "多维知识矩阵精准量化，动态追踪学术认知漏洞，实时绘制个人专业课掌握雷达。",
-      bg: "bg-indigo-50/50 hover:bg-indigo-50"
+      bg: "bg-blue-50/50 hover:bg-blue-50"
     },
     {
       icon: <Sparkles className="w-6 h-6 text-emerald-600" />,
@@ -34,10 +34,10 @@ export default function Portal({ onLogin }: PortalProps) {
       bg: "bg-emerald-50/50 hover:bg-emerald-50"
     },
     {
-      icon: <Compass className="w-6 h-6 text-purple-600" />,
+      icon: <Compass className="w-6 h-6 text-sky-500" />,
       title: "学习路径规划",
       desc: "PlannerAgent 智能规划最优学习里程碑，动态调整知识深度与时长，自适应匹配考研期末大纲。",
-      bg: "bg-purple-50/50 hover:bg-purple-50"
+      bg: "bg-sky-50/50 hover:bg-sky-50"
     },
     {
       icon: <ClipboardCheck className="w-6 h-6 text-rose-600" />,
@@ -48,11 +48,11 @@ export default function Portal({ onLogin }: PortalProps) {
   ];
 
   return (
-    <div className="min-h-screen glass-bg flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-950 font-sans relative">
+    <div className="min-h-screen glass-bg flex flex-col justify-between selection:bg-blue-100 selection:text-blue-950 font-sans relative">
       {/* Ambient background glowing blobs for Glassmorphism */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-200/30 blur-[130px] animate-pulse" style={{ animationDuration: '12s' }} />
-        <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-violet-200/25 blur-[140px] animate-pulse" style={{ animationDuration: '18s' }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-200/30 blur-[130px] animate-pulse" style={{ animationDuration: '12s' }} />
+        <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-sky-200/25 blur-[140px] animate-pulse" style={{ animationDuration: '18s' }} />
         <div className="absolute top-[35%] right-[10%] w-[45%] h-[45%] rounded-full bg-sky-200/25 blur-[120px] animate-pulse" style={{ animationDuration: '14s' }} />
         <div className="absolute bottom-[-10%] left-[5%] w-[55%] h-[55%] rounded-full bg-emerald-100/20 blur-[110px] animate-pulse" style={{ animationDuration: '20s' }} />
       </div>
@@ -60,12 +60,12 @@ export default function Portal({ onLogin }: PortalProps) {
       {/* Top Header */}
       <header className="px-6 py-4 md:px-12 flex justify-between items-center glass-header sticky top-0 z-10">
         <div className="flex items-center gap-3">
-          <div className="bg-indigo-600 p-2 rounded-xl text-white shadow-md shadow-indigo-100">
+          <div className="bg-blue-600 p-2 rounded-xl text-white shadow-md shadow-blue-100">
             <Cpu className="w-6 h-6" />
           </div>
           <div>
             <h1 className="text-xl font-bold tracking-tight text-slate-900 font-sans">
-              计智引擎 <span className="text-xs font-semibold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full ml-1">JiZhi Engine</span>
+              计智引擎 <span className="text-xs font-semibold bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full ml-1">JiZhi Engine</span>
             </h1>
             <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase">Multi-Agent CS Learning System</p>
           </div>
@@ -86,12 +86,12 @@ export default function Portal({ onLogin }: PortalProps) {
             transition={{ duration: 0.5 }}
             className="space-y-4"
           >
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-indigo-700 glass-card-dense rounded-full">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-blue-700 glass-card-dense rounded-full">
               <Sparkles className="w-3.5 h-3.5" /> 智能驱动 · 个性化生成 · 学术级深度
             </span>
             <h2 className="text-3.5xl md:text-4.5xl font-extrabold tracking-tight text-slate-900 leading-tight">
               计算机专业课 <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500">
                 多智能体协同
               </span> 自适应工作台
             </h2>
@@ -153,7 +153,7 @@ export default function Portal({ onLogin }: PortalProps) {
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center">
                   <label className="text-xs font-semibold text-slate-700 block">验证密码</label>
-                  <a href="#" className="text-xs text-indigo-600 hover:underline font-medium">忘记密码？</a>
+                  <a href="#" className="text-xs text-blue-600 hover:underline font-medium">忘记密码？</a>
                 </div>
                 <input
                   type="password"
@@ -169,7 +169,7 @@ export default function Portal({ onLogin }: PortalProps) {
 
               <div className="flex items-center justify-between">
                 <label className="flex items-center gap-2 cursor-pointer select-none">
-                  <input type="checkbox" defaultChecked className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4" />
+                  <input type="checkbox" defaultChecked className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4" />
                   <span className="text-xs text-slate-500 font-medium">保持登录状态</span>
                 </label>
                 <span className="text-xs text-slate-400 font-mono">节点: Web-Container-S1</span>
@@ -177,7 +177,7 @@ export default function Portal({ onLogin }: PortalProps) {
 
               <button
                 type="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm py-3 px-4 rounded-xl shadow-md shadow-indigo-100 hover:shadow-lg transition-all flex items-center justify-center gap-2 group cursor-pointer"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-3 px-4 rounded-xl shadow-md shadow-blue-100 hover:shadow-lg transition-all flex items-center justify-center gap-2 group cursor-pointer"
               >
                 登录工作台
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />

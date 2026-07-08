@@ -129,6 +129,14 @@ export default function App() {
     }));
   };
 
+  // Handle profile updates (e.g., streak and extra points from daily challenges)
+  const handleUpdateProfile = (updates: Partial<UserProfile>) => {
+    setProfile((prev) => ({
+      ...prev,
+      ...updates
+    }));
+  };
+
   if (!isLoggedIn) {
     return <Portal onLogin={handleLogin} />;
   }
@@ -145,11 +153,11 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen glass-bg flex flex-col lg:flex-row font-sans select-none selection:bg-indigo-100 selection:text-indigo-950">
+    <div className="min-h-screen glass-bg flex flex-col lg:flex-row font-sans select-none selection:bg-blue-100 selection:text-blue-950">
       {/* Ambient background glowing blobs for Glassmorphism */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-200/30 blur-[130px] animate-pulse" style={{ animationDuration: '12s' }} />
-        <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-violet-200/25 blur-[140px] animate-pulse" style={{ animationDuration: '18s' }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-200/30 blur-[130px] animate-pulse" style={{ animationDuration: '12s' }} />
+        <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-sky-200/25 blur-[140px] animate-pulse" style={{ animationDuration: '18s' }} />
         <div className="absolute top-[35%] right-[10%] w-[45%] h-[45%] rounded-full bg-sky-200/25 blur-[120px] animate-pulse" style={{ animationDuration: '14s' }} />
         <div className="absolute bottom-[-10%] left-[5%] w-[55%] h-[55%] rounded-full bg-emerald-100/20 blur-[110px] animate-pulse" style={{ animationDuration: '20s' }} />
       </div>
@@ -159,20 +167,20 @@ export default function App() {
         <div className="space-y-6">
           {/* Logo / Brand Header */}
           <div className="flex items-center gap-3 pb-5 border-b border-slate-100">
-            <div className="bg-indigo-600 p-2 rounded-xl text-white shadow-md shadow-indigo-100">
+            <div className="bg-blue-600 p-2 rounded-xl text-white shadow-md shadow-blue-100">
               <Cpu className="w-5 h-5" />
             </div>
             <div>
               <h1 className="text-sm font-bold tracking-tight text-slate-950 font-sans flex items-center gap-1">
-                计智引擎 <span className="text-[9px] font-bold bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded-full">v2.5</span>
+                计智引擎 <span className="text-[9px] font-bold bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded-full">v2.5</span>
               </h1>
               <p className="text-[8px] text-slate-400 font-mono tracking-widest uppercase">Multi-Agent Cognitive Learning</p>
             </div>
           </div>
 
           {/* Student Profile Info Card */}
-          <div className="p-3 bg-indigo-50/50 border border-indigo-100/30 rounded-2xl flex items-center gap-3">
-            <div className="p-2 bg-indigo-100/50 text-indigo-600 rounded-xl">
+          <div className="p-3 bg-blue-50/50 border border-blue-100/30 rounded-2xl flex items-center gap-3">
+            <div className="p-2 bg-blue-100/50 text-blue-600 rounded-xl">
               <User className="w-4 h-4" />
             </div>
             <div className="space-y-0.5">
@@ -191,7 +199,7 @@ export default function App() {
                   onClick={() => handleNavigateToTab(tab.id)}
                   className={`w-full px-4 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center gap-2.5 cursor-pointer text-left ${
                     isActive
-                      ? "bg-indigo-600 text-white shadow-md shadow-indigo-100"
+                      ? "bg-blue-600 text-white shadow-md shadow-blue-100"
                       : "glass-nav-item text-slate-600 hover:text-slate-900 hover:bg-slate-100/40"
                   }`}
                 >
@@ -234,7 +242,7 @@ export default function App() {
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="bg-indigo-600 p-1.5 rounded-lg text-white">
+            <div className="bg-blue-600 p-1.5 rounded-lg text-white">
               <Cpu className="w-4 h-4" />
             </div>
             <span className="text-sm font-bold text-slate-900">计智引擎</span>
@@ -280,7 +288,7 @@ export default function App() {
                 {/* Header inside drawer */}
                 <div className="flex justify-between items-center pb-4 border-b border-slate-100">
                   <div className="flex items-center gap-2">
-                    <div className="bg-indigo-600 p-1.5 rounded-lg text-white">
+                    <div className="bg-blue-600 p-1.5 rounded-lg text-white">
                       <Cpu className="w-4 h-4" />
                     </div>
                     <span className="text-sm font-extrabold text-slate-900">计智引擎 v2.5</span>
@@ -294,8 +302,8 @@ export default function App() {
                 </div>
 
                 {/* Mobile Profile Display */}
-                <div className="p-3 bg-indigo-50/40 border border-indigo-100/30 rounded-xl flex items-center gap-2">
-                  <User className="w-4 h-4 text-indigo-600" />
+                <div className="p-3 bg-blue-50/40 border border-blue-100/30 rounded-xl flex items-center gap-2">
+                  <User className="w-4 h-4 text-blue-600" />
                   <span className="text-xs font-bold text-slate-800">{studentName}</span>
                 </div>
 
@@ -312,7 +320,7 @@ export default function App() {
                         }}
                         className={`w-full px-3.5 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center gap-2.5 cursor-pointer text-left ${
                           isActive
-                            ? "bg-indigo-600 text-white shadow-md"
+                            ? "bg-blue-600 text-white shadow-md"
                             : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                         }`}
                       >
@@ -348,6 +356,7 @@ export default function App() {
             courses={courses}
             weakPoints={weakPoints}
             onNavigateToTab={handleNavigateToTab}
+            onUpdateProfile={handleUpdateProfile}
           />
         )}
 

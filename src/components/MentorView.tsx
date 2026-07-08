@@ -160,7 +160,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
         <div className="space-y-4 flex-grow overflow-y-auto">
           <button
             onClick={handleCreateSession}
-            className="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs py-2.5 px-3 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer"
+            className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs py-2.5 px-3 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer"
           >
             <Plus className="w-4 h-4" /> 开启全新学术对话
           </button>
@@ -177,7 +177,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
                     onClick={() => setActiveSessionId(s.id)}
                     className={`w-full text-left p-3 rounded-xl text-xs font-semibold flex items-center gap-2.5 transition-all cursor-pointer ${
                       isActive
-                        ? "bg-indigo-600 text-white shadow-md shadow-indigo-100"
+                        ? "bg-blue-600 text-white shadow-md shadow-blue-100"
                         : "hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-transparent hover:border-slate-100"
                     }`}
                   >
@@ -191,7 +191,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
         </div>
 
         <div className="border-t border-slate-100 pt-3 text-[10px] text-slate-400 font-mono flex items-center gap-1 justify-center">
-          <Cpu className="w-3.5 h-3.5 text-indigo-500" />
+          <Cpu className="w-3.5 h-3.5 text-blue-500" />
           <span>JiZhi LLM Node: G-3.5</span>
         </div>
       </div>
@@ -202,7 +202,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
         <div className="px-5 py-3.5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
           <div className="space-y-0.5">
             <h3 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-              <Workflow className="w-4 h-4 text-indigo-600 animate-pulse" /> 计智引擎 (综合协调者)
+              <Workflow className="w-4 h-4 text-blue-600 animate-pulse" /> 计智引擎 (综合协调者)
             </h3>
             <p className="text-[10px] text-slate-400 leading-none">系统已挂载 TheoryAgent, CodeAgent, ReviewAgent 实时研讨</p>
           </div>
@@ -215,7 +215,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
         <div className="flex-grow p-5 overflow-y-auto space-y-5 bg-slate-50/20">
           {activeSession.messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
-              <Brain className="w-10 h-10 text-indigo-600/30" />
+              <Brain className="w-10 h-10 text-blue-600/30" />
               <div>
                 <h4 className="text-xs font-bold text-slate-700">没有对话消息</h4>
                 <p className="text-[11px] text-slate-400 mt-1 max-w-xs leading-relaxed">
@@ -230,7 +230,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
                 {msg.sender === "user" ? (
                   /* User Bubble */
                   <div className="flex justify-end">
-                    <div className="bg-indigo-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 text-xs font-medium max-w-md shadow-sm leading-relaxed">
+                    <div className="bg-blue-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 text-xs font-medium max-w-md shadow-sm leading-relaxed">
                       {msg.text}
                     </div>
                   </div>
@@ -258,13 +258,13 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
                         >
                           <div className="flex justify-between items-center mb-2 pb-1.5 border-b border-dashed border-slate-100/10">
                             <span className={`text-[11px] font-bold tracking-tight uppercase flex items-center gap-1.5 ${
-                              isCoordinator ? "text-indigo-400" :
+                              isCoordinator ? "text-blue-400" :
                               isTheory ? "text-slate-800" :
                               isCode ? "text-amber-400" :
                               "text-emerald-700"
                             }`}>
                               {isCoordinator && <Workflow className="w-3.5 h-3.5" />}
-                              {isTheory && <BookOpen className="w-3.5 h-3.5 text-indigo-600" />}
+                              {isTheory && <BookOpen className="w-3.5 h-3.5 text-blue-600" />}
                               {isCode && <Code className="w-3.5 h-3.5 text-amber-500" />}
                               {isReview && <AlertTriangle className="w-3.5 h-3.5 text-emerald-600" />}
                               {part.title}
@@ -314,7 +314,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
             <div className="bg-slate-900 text-slate-300 p-4 rounded-xl border border-slate-800 space-y-3 font-mono text-xs fade-in">
               <div className="flex justify-between items-center border-b border-slate-800 pb-2">
                 <span className="text-white font-bold flex items-center gap-1.5">
-                  <Workflow className="w-4 h-4 text-indigo-400 animate-spin" /> Cognitive Synergy Meeting
+                  <Workflow className="w-4 h-4 text-blue-400 animate-spin" /> Cognitive Synergy Meeting
                 </span>
                 <span className="text-[10px] text-slate-500">Live Workspace</span>
               </div>
@@ -364,7 +364,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
                 }
               }}
               placeholder="向多维智能体提问（按 Enter 发送，或 Shift+Enter 换行）..."
-              className="flex-grow min-h-[50px] max-h-[120px] p-3 rounded-xl border border-slate-200 focus:outline-none focus:border-indigo-500 bg-white text-xs font-semibold leading-relaxed"
+              className="flex-grow min-h-[50px] max-h-[120px] p-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 bg-white text-xs font-semibold leading-relaxed"
             />
           </div>
 
@@ -390,7 +390,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
             <button
               onClick={() => handleSubmitMessage(inputText)}
               disabled={isSubmitting || !inputText.trim()}
-              className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-md shadow-indigo-100 hover:shadow-lg transition-all flex items-center gap-1 cursor-pointer"
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-md shadow-blue-100 hover:shadow-lg transition-all flex items-center gap-1 cursor-pointer"
             >
               发送问题
               <Send className="w-3.5 h-3.5" />
@@ -404,7 +404,7 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
         {/* Knowledge tags */}
         <section className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 space-y-3">
           <h4 className="text-[11px] font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1">
-            <Hash className="w-3.5 h-3.5 text-indigo-600" /> 关联知识标签
+            <Hash className="w-3.5 h-3.5 text-blue-600" /> 关联知识标签
           </h4>
           <div className="flex flex-wrap gap-1.5">
             {activeSession.knowledgePoints.map((kp, i) => (
@@ -422,13 +422,13 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
         {/* Academic Materials */}
         <section className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 space-y-3">
           <h4 className="text-[11px] font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1">
-            <BookOpen className="w-3.5 h-3.5 text-indigo-600" /> 推荐教辅资料
+            <BookOpen className="w-3.5 h-3.5 text-blue-600" /> 推荐教辅资料
           </h4>
           <div className="space-y-2.5">
             {activeSession.recommendedResources.map((res, i) => (
               <div key={i} className="text-xs p-2.5 bg-slate-50 border border-slate-100 rounded-lg space-y-1">
                 <div className="flex justify-between items-center">
-                  <span className="text-[9px] font-bold text-indigo-600 uppercase tracking-wider">{res.type}</span>
+                  <span className="text-[9px] font-bold text-blue-600 uppercase tracking-wider">{res.type}</span>
                 </div>
                 <div className="font-semibold text-slate-700 leading-tight">{res.title}</div>
               </div>
@@ -446,9 +446,9 @@ export default function MentorView({ initialPrompt, onClearPrefill }: MentorView
               <button
                 key={i}
                 onClick={() => handleSubmitMessage(fl)}
-                className="w-full text-left p-2.5 text-xs text-slate-600 bg-slate-50 hover:bg-indigo-50/30 hover:text-indigo-950 border border-slate-100 rounded-xl leading-relaxed transition-all cursor-pointer flex items-start gap-1 font-semibold"
+                className="w-full text-left p-2.5 text-xs text-slate-600 bg-slate-50 hover:bg-blue-50/30 hover:text-blue-950 border border-slate-100 rounded-xl leading-relaxed transition-all cursor-pointer flex items-start gap-1 font-semibold"
               >
-                <ArrowRight className="w-3.5 h-3.5 text-indigo-500 shrink-0 mt-0.5" />
+                <ArrowRight className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
                 <span>{fl}</span>
               </button>
             ))}

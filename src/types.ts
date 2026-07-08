@@ -8,6 +8,7 @@ export interface UserProfile {
   testsTaken: number;
   pendingTasks: number;
   weakPointsCount: number;
+  extraPoints?: number; // extra challenge points
 }
 
 export interface Course {

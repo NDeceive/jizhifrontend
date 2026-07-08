@@ -320,7 +320,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
             className={`px-3 py-1 text-[10px] font-bold rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-md ${
               isBreak
                 ? "bg-emerald-500/90 text-white"
-                : "bg-indigo-600/95 text-white"
+                : "bg-blue-600/95 text-white"
             }`}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
@@ -339,7 +339,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
             isBreak
               ? "bg-emerald-500 hover:bg-emerald-600 shadow-emerald-200/50"
               : isRunning
-              ? "bg-indigo-600 hover:bg-indigo-700 shadow-indigo-200/50 animate-pulse"
+              ? "bg-blue-600 hover:bg-blue-700 shadow-blue-200/50 animate-pulse"
               : "bg-slate-800 hover:bg-slate-900 shadow-slate-300/40"
           }`}
           style={{ animationDuration: "3s" }}
@@ -362,12 +362,12 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
             className="fixed bottom-24 right-6 w-80 sm:w-96 rounded-3xl glass-card-dense shadow-2xl border border-white/60 p-6 z-40 flex flex-col gap-4 text-slate-800 select-none overflow-hidden"
           >
             {/* Embedded glowing ambient backgrounds */}
-            <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-indigo-500/5 via-transparent to-violet-500/5 pointer-events-none" />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-blue-500/5 via-transparent to-sky-500/5 pointer-events-none" />
 
             {/* Header */}
             <div className="flex justify-between items-center pb-2 border-b border-slate-100/60">
               <div className="flex items-center gap-2">
-                <div className={`p-1.5 rounded-lg ${isBreak ? "bg-emerald-50 text-emerald-600" : "bg-indigo-50 text-indigo-600"}`}>
+                <div className={`p-1.5 rounded-lg ${isBreak ? "bg-emerald-50 text-emerald-600" : "bg-blue-50 text-blue-600"}`}>
                   {isBreak ? <Coffee className="w-4 h-4" /> : <Brain className="w-4 h-4" />}
                 </div>
                 <div>
@@ -412,7 +412,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
                     cy="72"
                     r={radius}
                     className={`fill-none transition-all duration-300 ${
-                      isBreak ? "stroke-emerald-500" : "stroke-indigo-600"
+                      isBreak ? "stroke-emerald-500" : "stroke-blue-600"
                     }`}
                     strokeWidth={strokeWidth}
                     strokeDasharray={circumference}
@@ -427,7 +427,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
                     {formatTime(timeLeft)}
                   </span>
                   <span className={`text-[10px] font-bold px-2 py-0.5 mt-1.5 rounded-full ${
-                    isBreak ? "bg-emerald-50 text-emerald-700" : "bg-indigo-50/80 text-indigo-700"
+                    isBreak ? "bg-emerald-50 text-emerald-700" : "bg-blue-50/80 text-blue-700"
                   }`}>
                     {isBreak ? "小憩状态" : "深度沉浸期"}
                   </span>
@@ -437,11 +437,11 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
 
             {/* Adaptive Smart Agent Companion Advice Box */}
             <div className="p-3 bg-white/60 border border-slate-100 rounded-2xl flex gap-2.5 items-start">
-              <div className="p-1 bg-indigo-50 rounded-lg text-indigo-600 shrink-0 mt-0.5">
+              <div className="p-1 bg-blue-50 rounded-lg text-blue-600 shrink-0 mt-0.5">
                 <MessageSquare className="w-3.5 h-3.5" />
               </div>
               <div className="space-y-0.5">
-                <span className="text-[9px] font-bold font-mono tracking-wider text-indigo-600 uppercase">
+                <span className="text-[9px] font-bold font-mono tracking-wider text-blue-600 uppercase">
                   {activeQuote.agent} · 智慧反馈
                 </span>
                 <p className="text-[11px] leading-relaxed text-slate-500 font-medium">
@@ -455,7 +455,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs">
                   <span className="font-bold text-slate-700">设置浸入时长</span>
-                  <span className="font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-lg">
+                  <span className="font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg">
                     {duration} 分钟
                   </span>
                 </div>
@@ -466,7 +466,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
                   step="1"
                   value={duration}
                   onChange={(e) => setDuration(Number(e.target.value))}
-                  className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600 focus:outline-none"
+                  className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none"
                 />
 
                 {/* Preset Fast Actions */}
@@ -477,7 +477,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
                       onClick={() => handleSetPreset(min)}
                       className={`py-1 text-[10px] font-bold rounded-lg border transition-all cursor-pointer ${
                         duration === min
-                          ? "border-indigo-600 bg-indigo-50 text-indigo-700 font-extrabold"
+                          ? "border-blue-600 bg-blue-50 text-blue-700 font-extrabold"
                           : "border-slate-100 hover:border-slate-200 bg-white/40 hover:bg-white/80 text-slate-600"
                       }`}
                     >
@@ -492,7 +492,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
             {!isBreak && (
               <div className="bg-slate-50/50 border border-slate-100 rounded-2xl p-2.5 flex flex-col gap-2">
                 <div className="flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase tracking-wide px-1">
-                  <span className="flex items-center gap-1"><Sparkles className="w-3 h-3 text-indigo-500" /> 白噪音脑波对齐</span>
+                  <span className="flex items-center gap-1"><Sparkles className="w-3 h-3 text-blue-500" /> 白噪音脑波对齐</span>
                   <button
                     onClick={() => setChimeEnabled(!chimeEnabled)}
                     className="flex items-center gap-0.5 text-slate-400 hover:text-slate-600 transition-colors"
@@ -550,7 +550,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
                     className={`flex-grow py-3 text-xs font-extrabold rounded-xl text-white transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer ${
                       isRunning
                         ? "bg-rose-500 hover:bg-rose-600 shadow-rose-100"
-                        : "bg-indigo-600 hover:bg-indigo-700 shadow-indigo-150"
+                        : "bg-blue-600 hover:bg-blue-700 shadow-blue-150"
                     }`}
                   >
                     {isRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
@@ -582,7 +582,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
             onClick={() => setIsMinimized(false)}
             className="fixed bottom-24 right-6 px-4 py-2.5 rounded-full glass-card-dense shadow-xl border border-white/60 flex items-center gap-3 cursor-pointer hover:shadow-2xl transition-all z-40 group select-none"
           >
-            <div className={`p-1 rounded-full shrink-0 animate-pulse ${isBreak ? "bg-emerald-100 text-emerald-600" : "bg-indigo-100 text-indigo-600"}`}>
+            <div className={`p-1 rounded-full shrink-0 animate-pulse ${isBreak ? "bg-emerald-100 text-emerald-600" : "bg-blue-100 text-blue-600"}`}>
               {isBreak ? <Coffee className="w-3.5 h-3.5" /> : <Brain className="w-3.5 h-3.5" />}
             </div>
             <div className="flex flex-col">
@@ -612,9 +612,9 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
             >
               {/* Confetti & Medal Icon Header */}
               <div className="flex flex-col items-center text-center gap-3">
-                <div className="w-16 h-16 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-inner relative">
+                <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-inner relative">
                   <Award className="w-10 h-10 animate-bounce" />
-                  <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-indigo-400 animate-ping"></span>
+                  <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-blue-400 animate-ping"></span>
                 </div>
                 <div className="space-y-1">
                   <h3 className="text-xl font-black text-slate-900 tracking-tight">专注达成！完成了一次学术深潜</h3>
@@ -624,7 +624,7 @@ export default function FocusTimer({ onFocusComplete }: FocusTimerProps) {
 
               {/* Congratulatory message */}
               <p className="text-xs text-slate-600 text-center leading-relaxed">
-                恭喜同学！您成功达成了持续的 <span className="font-extrabold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-lg">{completedMinutes} 分钟</span> 高强度计算机专业课心流体验。
+                恭喜同学！您成功达成了持续的 <span className="font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg">{completedMinutes} 分钟</span> 高强度计算机专业课心流体验。
               </p>
 
               {/* ProfileAgent Scientifically Recommended Break Tips */}

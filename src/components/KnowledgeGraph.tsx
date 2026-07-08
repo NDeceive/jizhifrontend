@@ -37,6 +37,8 @@ interface GraphLink extends d3.SimulationLinkDatum<GraphNode> {
   source: string | GraphNode;
   target: string | GraphNode;
   value: number;
+  isDependency?: boolean;
+  depLabel?: string;
 }
 
 // Generate stable deterministic 7-day trend history data for each node
@@ -144,6 +146,53 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
     }
   });
 
+  // Predecessor-successor curriculum core dependencies
+  const dependencies = [
+    { source: "c-lang", target: "data-struct", label: "C 指针与内存是实现数据结构的编程与调试基础" },
+    { source: "data-struct", target: "os", label: "数据结构支撑操作系统中进程就绪/阻塞队列与空闲分区分配" },
+    { source: "comp-org", target: "os", label: "计算机硬件体系提供页表、中断硬件支持，配合 OS 实现虚拟内存与并发管理" },
+    { source: "os", target: "networks", label: "操作系统的网络协议栈（TCP/IP Socket）是上层网络通信的系统调用级支撑" },
+    { source: "gen-c-ptr", target: "gen-ds-tree", label: "多级指针与内存对齐是深刻理解与独立编码非递归二叉树遍历的基石" },
+    { source: "gen-c-struct", target: "gen-comp-cache", label: "结构体成员对齐以及数组连续存放形式直接影响 Cache 局部性与主存块命中率" },
+    { source: "gen-ds-graph", target: "gen-net-ip", label: "图论中最短路径 Dijkstra 算法是计算机网络动态路由选择协议（如 OSPF）的核心底层机制" },
+    { source: "gen-comp-cache", target: "gen-os-mem", label: "Cache 组相联映射以及置换机制，在设计思想上与操作系统的虚存分页/置换算法完全贯通" },
+    { source: "gen-os-mem", target: "gen-os-io", label: "虚拟内存因缺页而引发的置换与数据调入调出，高度依赖 I/O 调度机制以及 DMA 零拷贝传输" }
+  ];
+
+  // Add predecessor-successor dependency links
+  dependencies.forEach(dep => {
+    const sourceExists = nodes.some(n => n.id === dep.source);
+    const targetExists = nodes.some(n => n.id === dep.target);
+    if (sourceExists && targetExists) {
+      links.push({
+        source: dep.source,
+        target: dep.target,
+        value: 1.8,
+        isDependency: true,
+        depLabel: dep.label
+      });
+    }
+  });
+
+  // Helper to query dependencies context for a given node
+  const getDependencyContext = (nodeId: string) => {
+    const precursors = dependencies.filter(d => d.target === nodeId).map(d => ({
+      id: d.source,
+      name: nodes.find(n => n.id === d.source)?.name || d.source,
+      label: d.label
+    }));
+
+    const successors = dependencies.filter(d => d.source === nodeId).map(d => ({
+      id: d.target,
+      name: nodes.find(n => n.id === d.target)?.name || d.target,
+      label: d.label
+    }));
+
+    return { precursors, successors };
+  };
+
+  const depContext = selectedNode ? getDependencyContext(selectedNode.id) : null;
+
   // Filter nodes for search
   const filteredNodes = nodes.filter(node => 
     node.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -174,6 +223,32 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
 
     // Definition of Gradients & Filters
     const defs = svg.append("defs");
+
+    // Self-contained keyframe animation styles inside SVG defs
+    defs.append("style").text(`
+      @keyframes dependency-flow {
+        to {
+          stroke-dashoffset: -20;
+        }
+      }
+      .dependency-flow-line {
+        stroke-dasharray: 6, 4;
+        animation: dependency-flow 1.5s linear infinite;
+      }
+    `);
+
+    // Arrow marker for predecessor-successor dependencies
+    defs.append("marker")
+      .attr("id", "arrow-dependency")
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 20) // offset to point clearly on outer border
+      .attr("refY", 0)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M0,-4 L8,0 L0,4 Z")
+      .attr("fill", "#6366f1");
 
     // Glow effect filter
     const glowFilter = defs.append("filter")
@@ -249,9 +324,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
 
     // Links group
     const linkGroup = mainGroup.append("g")
-      .attr("class", "links")
-      .attr("stroke", "rgba(148, 163, 184, 0.15)")
-      .attr("stroke-opacity", 0.65);
+      .attr("class", "links");
 
     // Nodes group
     const nodeGroup = mainGroup.append("g")
@@ -264,6 +337,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
         .distance(link => {
           const s = link.source as GraphNode;
           const t = link.target as GraphNode;
+          if (link.isDependency) return 145; // wider distance for predecessor-successor core paths
           if (s && s.type === "root") return 110;
           if (t && t.type === "weakpoint") return 75;
           return 85;
@@ -289,6 +363,10 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
       .enter()
       .append("line")
       .attr("stroke-width", d => d.value)
+      .attr("stroke", d => d.isDependency ? "rgba(99, 102, 241, 0.45)" : "rgba(148, 163, 184, 0.15)")
+      .attr("stroke-opacity", d => d.isDependency ? 0.8 : 0.65)
+      .attr("marker-end", d => d.isDependency ? "url(#arrow-dependency)" : null)
+      .attr("class", d => d.isDependency ? "dependency-flow-line" : null)
       .style("transition", "stroke 0.2s, stroke-width 0.2s, stroke-opacity 0.2s");
 
     // Create node container groups
@@ -392,7 +470,10 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
       linkElements.style("stroke", l => {
         const sourceId = typeof l.source === "object" ? l.source.id : l.source;
         const targetId = typeof l.target === "object" ? l.target.id : l.target;
-        return sourceId === d.id || targetId === d.id ? getNodeColor(d) : "rgba(148, 163, 184, 0.08)";
+        if (sourceId === d.id || targetId === d.id) {
+          return l.isDependency ? "#6366f1" : getNodeColor(d);
+        }
+        return l.isDependency ? "rgba(99, 102, 241, 0.08)" : "rgba(148, 163, 184, 0.08)";
       })
       .style("stroke-opacity", l => {
         const sourceId = typeof l.source === "object" ? l.source.id : l.source;
@@ -402,7 +483,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
       .style("stroke-width", l => {
         const sourceId = typeof l.source === "object" ? l.source.id : l.source;
         const targetId = typeof l.target === "object" ? l.target.id : l.target;
-        return sourceId === d.id || targetId === d.id ? 3 : 1;
+        return sourceId === d.id || targetId === d.id ? 3.5 : (l.isDependency ? 1.8 : 1);
       });
 
       // Ghost other nodes
@@ -434,8 +515,8 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
 
       // Restore link styles
       linkElements
-        .style("stroke", "rgba(148, 163, 184, 0.15)")
-        .style("stroke-opacity", 0.65)
+        .style("stroke", l => l.isDependency ? "rgba(99, 102, 241, 0.45)" : "rgba(148, 163, 184, 0.15)")
+        .style("stroke-opacity", l => l.isDependency ? 0.8 : 0.65)
         .style("stroke-width", d => d.value);
 
       // Restore node styles
@@ -554,7 +635,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 backdrop-blur-md border border-slate-100/80 p-4 rounded-2xl shadow-sm">
         <div className="space-y-0.5">
           <h3 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <Brain className="w-4 h-4 text-indigo-600" /> 学科全图谱导航 (Multi-Agent Knowledge Matrix)
+            <Brain className="w-4 h-4 text-blue-600" /> 学科全图谱导航 (Multi-Agent Knowledge Matrix)
           </h3>
           <p className="text-xs text-slate-400">基于图神经网络及错题反馈，自动构建的 408 知识点熟练度关联拓扑图。</p>
         </div>
@@ -570,7 +651,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
               placeholder="搜索知识点..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full sm:w-44 pl-9 pr-3 py-1.5 text-xs font-semibold rounded-xl border border-slate-200 bg-slate-50/50 focus:outline-none focus:border-indigo-500 text-slate-800"
+              className="w-full sm:w-44 pl-9 pr-3 py-1.5 text-xs font-semibold rounded-xl border border-slate-200 bg-slate-50/50 focus:outline-none focus:border-blue-500 text-slate-800"
             />
           </div>
 
@@ -602,7 +683,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
                 <span>熟练掌握 (&ge; 85%)</span>
               </div>
               <div className="flex items-center gap-2 text-slate-600">
-                <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-sm" />
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm" />
                 <span>正在攻克 (70% - 84%)</span>
               </div>
               <div className="flex items-center gap-2 text-slate-600">
@@ -618,7 +699,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
 
           {/* Drag & Zoom Info Badge */}
           <div className="absolute top-4 left-4 px-2.5 py-1.5 bg-slate-900/80 backdrop-blur-md text-white/90 text-[9px] font-mono rounded-lg flex items-center gap-1.5">
-            <Info className="w-3 h-3 text-indigo-400" />
+            <Info className="w-3 h-3 text-blue-400" />
             <span>[ 鼠标拖拽拖动节点 / 滚轮缩放视图 / 双击重置 ]</span>
           </div>
 
@@ -636,7 +717,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
                 <span className="text-slate-400">当前掌握度:</span>
                 <span className={`font-mono font-bold ${
                   hoveredNode.proficiency >= 85 ? "text-emerald-400" :
-                  hoveredNode.proficiency >= 70 ? "text-indigo-400" : "text-rose-400 animate-pulse"
+                  hoveredNode.proficiency >= 70 ? "text-blue-400" : "text-rose-400 animate-pulse"
                 }`}>
                   {hoveredNode.proficiency}%
                 </span>
@@ -711,7 +792,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
                   <div className="space-y-1">
                     <span className={`text-[9px] font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full inline-block ${
                       selectedNode.type === "root" ? "bg-slate-100 text-slate-700" :
-                      selectedNode.type === "course" ? "bg-indigo-50 text-indigo-700 border border-indigo-100/50" :
+                      selectedNode.type === "course" ? "bg-blue-50 text-blue-700 border border-blue-100/50" :
                       selectedNode.type === "weakpoint" ? "bg-rose-50 text-rose-700 border border-rose-100/50 animate-pulse" :
                       "bg-emerald-50 text-emerald-700 border border-emerald-100/50"
                     }`}>
@@ -737,7 +818,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
                       <path
                         className={
                           selectedNode.proficiency >= 85 ? "text-emerald-500" :
-                          selectedNode.proficiency >= 70 ? "text-indigo-600" : "text-rose-500"
+                          selectedNode.proficiency >= 70 ? "text-blue-600" : "text-rose-500"
                         }
                         strokeDasharray={`${selectedNode.proficiency}, 100`}
                         strokeWidth="3"
@@ -773,9 +854,58 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
                   </div>
                 )}
 
+                {/* Precursor and Successor Dependencies Section */}
+                {depContext && (depContext.precursors.length > 0 || depContext.successors.length > 0) && (
+                  <div className="border-t border-slate-100 pt-3.5 space-y-3">
+                    <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">
+                      知识关联与依赖流向 (Dependency Flow)
+                    </p>
+                    
+                    {depContext.precursors.length > 0 && (
+                      <div className="space-y-1.5">
+                        <p className="text-[9px] font-bold text-blue-500 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                          <span>前驱依赖节点 (Precursors)</span>
+                        </p>
+                        <div className="space-y-1">
+                          {depContext.precursors.map(prec => (
+                            <div key={prec.id} className="p-2 bg-slate-50 border border-slate-100 rounded-xl space-y-1">
+                              <div className="flex justify-between items-center text-[10px]">
+                                <span className="font-bold text-slate-800">{prec.name}</span>
+                                <span className="text-[9px] font-bold text-slate-500 bg-slate-100/80 px-1.5 py-0.5 rounded-md">前驱</span>
+                              </div>
+                              <p className="text-[9px] text-slate-400 font-semibold leading-relaxed">{prec.label}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {depContext.successors.length > 0 && (
+                      <div className="space-y-1.5">
+                        <p className="text-[9px] font-bold text-emerald-600 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          <span>后继衔接节点 (Successors)</span>
+                        </p>
+                        <div className="space-y-1">
+                          {depContext.successors.map(succ => (
+                            <div key={succ.id} className="p-2 bg-slate-50 border border-slate-100 rounded-xl space-y-1">
+                              <div className="flex justify-between items-center text-[10px]">
+                                <span className="font-bold text-slate-800">{succ.name}</span>
+                                <span className="text-[9px] font-bold text-blue-600 bg-blue-50/80 px-1.5 py-0.5 rounded-md">后继</span>
+                              </div>
+                              <p className="text-[9px] text-slate-400 font-semibold leading-relaxed">{succ.label}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Subtopic description & AI suggestions */}
                 <div className="space-y-2 border-t border-slate-100 pt-3">
-                  <p className="text-[10px] font-bold text-indigo-600 flex items-center gap-1">
+                  <p className="text-[10px] font-bold text-blue-600 flex items-center gap-1">
                     <Sparkles className="w-3.5 h-3.5" /> {aiRec?.tip}
                   </p>
                   <p className="text-[11px] text-slate-500 font-semibold leading-relaxed">
@@ -789,7 +919,7 @@ export default function KnowledgeGraph({ courses, weakPoints, onNavigateToTab }:
                 {aiRec && (
                   <button
                     onClick={() => onNavigateToTab(aiRec.tab, aiRec.prompt)}
-                    className="w-full py-2.5 px-4 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-md shadow-indigo-100 hover:shadow-indigo-200 cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full py-2.5 px-4 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all shadow-md shadow-blue-100 hover:shadow-blue-200 cursor-pointer flex items-center justify-center gap-2"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>{aiRec.task}</span>

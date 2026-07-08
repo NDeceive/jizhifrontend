@@ -44,7 +44,7 @@ export default function PathView({ courses, weakPoints, onNavigateToTab }: PathV
       <section className="bg-white rounded-2xl border border-slate-100 p-6 md:p-8 shadow-sm grid md:grid-cols-12 gap-6 items-center">
         <div className="md:col-span-8 space-y-4">
           <div className="space-y-1.5">
-            <span className="bg-indigo-50 text-indigo-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-indigo-100 inline-flex items-center gap-1">
+            <span className="bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-blue-100 inline-flex items-center gap-1">
               <Compass className="w-3.5 h-3.5" /> PlannerAgent 协同规划中
             </span>
             <h2 className="text-xl md:text-2xl font-bold text-slate-900 leading-tight">
@@ -58,10 +58,10 @@ export default function PathView({ courses, weakPoints, onNavigateToTab }: PathV
           <div className="space-y-1">
             <div className="flex justify-between items-center text-xs font-semibold">
               <span className="text-slate-400">通关总进度</span>
-              <span className="text-indigo-600 font-bold">{overallProgress}%</span>
+              <span className="text-blue-600 font-bold">{overallProgress}%</span>
             </div>
             <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-              <div className="bg-indigo-600 h-full rounded-full transition-all duration-500" style={{ width: `${overallProgress}%` }}></div>
+              <div className="bg-blue-600 h-full rounded-full transition-all duration-500" style={{ width: `${overallProgress}%` }}></div>
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function PathView({ courses, weakPoints, onNavigateToTab }: PathV
       {/* Timeline stages */}
       <section className="space-y-4">
         <h3 className="text-xs font-bold text-slate-950 uppercase tracking-wider pl-1.5 flex items-center gap-1">
-          <Award className="w-4 h-4 text-indigo-600" /> 通关大纲里程碑
+          <Award className="w-4 h-4 text-blue-600" /> 通关大纲里程碑
         </h3>
 
         <div className="space-y-4 relative pl-4 md:pl-8 border-l-2 border-slate-150 ml-4 md:ml-8 py-2">
@@ -103,7 +103,7 @@ export default function PathView({ courses, weakPoints, onNavigateToTab }: PathV
                   isCompleted
                     ? "border-emerald-100 bg-emerald-500 text-white"
                     : isActive
-                    ? "border-indigo-100 bg-indigo-600 text-white animate-pulse"
+                    ? "border-blue-100 bg-blue-600 text-white animate-pulse"
                     : "border-slate-100 bg-slate-200 text-slate-400"
                 }`}>
                   {isCompleted && <CheckCircle className="w-3.5 h-3.5" />}
@@ -113,7 +113,7 @@ export default function PathView({ courses, weakPoints, onNavigateToTab }: PathV
 
                 <div className={`p-5 rounded-2xl border transition-all ${
                   isActive
-                    ? "border-indigo-600 ring-2 ring-indigo-50 bg-indigo-50/5"
+                    ? "border-blue-600 ring-2 ring-blue-50 bg-blue-50/5"
                     : "border-slate-100 bg-white hover:border-slate-200"
                 }`}>
                   {/* Top header row */}
@@ -126,7 +126,7 @@ export default function PathView({ courses, weakPoints, onNavigateToTab }: PathV
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">第 {sIdx + 1} 阶段 ({stage.duration})</span>
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                           isCompleted ? "bg-emerald-50 text-emerald-700" :
-                          isActive ? "bg-indigo-50 text-indigo-700" :
+                          isActive ? "bg-blue-50 text-blue-700" :
                           "bg-slate-50 text-slate-400"
                         }`}>
                           {isCompleted ? "已通关" : isActive ? `进行中 · 已完成 ${stage.progress}%` : "未解锁"}
@@ -182,13 +182,13 @@ export default function PathView({ courses, weakPoints, onNavigateToTab }: PathV
                           <div className="flex gap-2 w-full md:w-auto shrink-0">
                             <button
                               onClick={() => onNavigateToTab("mentor", `我想针对【${stage.title}】的阶段难点（如红黑树、AVL旋转）进行一次专门的学术答疑，请帮我分析核心算法指针细节。`)}
-                              className="flex-1 md:flex-initial text-xs font-semibold text-indigo-600 bg-white hover:bg-indigo-50 border border-slate-200 px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer"
+                              className="flex-1 md:flex-initial text-xs font-semibold text-blue-600 bg-white hover:bg-blue-50 border border-slate-200 px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer"
                             >
                               <MessageSquare className="w-3.5 h-3.5" /> 关联答疑
                             </button>
                             <button
                               onClick={() => onNavigateToTab("quiz")}
-                              className="flex-1 md:flex-initial text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-xl shadow-md transition-all flex items-center justify-center gap-1 cursor-pointer"
+                              className="flex-1 md:flex-initial text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl shadow-md transition-all flex items-center justify-center gap-1 cursor-pointer"
                             >
                               <Brain className="w-3.5 h-3.5 text-amber-300 animate-pulse" /> 开始阶段练习 <ArrowRight className="w-3.5 h-3.5" />
                             </button>
